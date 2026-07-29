@@ -1,6 +1,9 @@
 from google import genai
 from dotenv import load_dotenv
 import os
+from scraper import fetch_articles, get_all_full_text
+from config import FEEDS
+import time
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
@@ -27,7 +30,20 @@ def summarize (text):
  
     return response.text
 
+def summarize_all_text(texts):
+    all_summaries = []
+    for text in texts:
+        summary = summarize(text)
+        time.sleep(5)
+
+        all_summaries.append(summary)
+
+    return all_summaries
+
 
 if __name__ == "__main__":
-    result = summarize("Apple announced a new iPhone today with improved cameras and battery life.")
-    print(result)
+   articles = fetch_articles(FEEDS)
+   texts = get_all_full_text(articles)
+   summaries = summarize_all_text(texts)
+   print(len(summaries))
+
