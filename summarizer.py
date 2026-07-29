@@ -2,9 +2,8 @@ from google import genai
 from dotenv import load_dotenv
 import os
 
-load_dotenv
+load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
-print("Key loaded:", api_key)
 
 client = genai.Client(api_key=api_key)
 
@@ -17,8 +16,8 @@ easy to understand. Do not add opinions or information not present in the articl
 Article:
 {text}"""
     
-    response = client.model.generate_content(   
-             model = "gemini-2.5-flash",
+    response = client.models.generate_content(   
+             model = "gemini-3.5-flash-lite",
             contents = "prompt"
     
     )
