@@ -34,7 +34,7 @@ def summarize_all_text(texts):
     all_summaries = []
     for text in texts:
         summary = summarize(text)
-        time.sleep(5)
+        time.sleep(6)
 
         all_summaries.append(summary)
 
@@ -45,5 +45,5 @@ if __name__ == "__main__":
    articles = fetch_articles(FEEDS)
    texts = get_all_full_text(articles)
    summaries = summarize_all_text(texts)
-   print(len(summaries))
+
 
