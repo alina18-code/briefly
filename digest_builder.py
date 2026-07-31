@@ -10,12 +10,13 @@ def build_digest_entries(articles, texts , summaries):
         word_counts = text.split()
         word_count = len(word_counts)
         read_time = word_count / 200 
+        round_read_time = round(read_time)
         entry = {
            "title": article.title,
            "link": article.link,
             "summary": summary,
             "word counts": word_count,
-            "read time": read_time
+            "read time": round_read_time
         }
         digest_entries.append(entry)
     return digest_entries
