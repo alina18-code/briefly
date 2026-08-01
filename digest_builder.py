@@ -21,6 +21,22 @@ def build_digest_entries(articles, texts , summaries):
         digest_entries.append(entry)
     return digest_entries
 
+def build_email_body(digest_entries):
+    body = ""
+    for entry in digest_entries:
+        chunk = f"""
+         📰 {entry['title']}
+         ⏱️ {entry['read_time']} min read | 📝 {entry['word_count']} words
+         {entry['summary']}
+         🔗 Read full article: {entry['link']}
+         ------------------------------
+                                        """
+        body += chunk
+
+    return body
+
+
+
 
 
 
