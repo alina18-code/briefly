@@ -1,6 +1,7 @@
 from config import FEEDS
 from scraper import fetch_articles, get_all_full_text
 from summarizer import summarize_all_text
+from mailer import send_email
 
 
 
@@ -46,6 +47,7 @@ if __name__ == "__main__":
     texts = get_all_full_text(articles)
     summaries = summarize_all_text(texts)
     digest_entries = build_digest_entries(articles, summaries, texts)
-
     print(len(digest_entries))
-    print(digest_entries[0])
+    email_body = build_email_body(digest_entries)
+    send_email("Your Daily AI News Digest", email_body)
+
