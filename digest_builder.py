@@ -16,29 +16,26 @@ def build_digest_entries(articles, texts , summaries):
            "title": article.title,
            "link": article.link,
             "summary": summary,
-            "word counts": word_count,
-            "read time": round_read_time
+            "word_count": word_count,
+            "read_time": round_read_time
         }
         digest_entries.append(entry)
     return digest_entries
+
 
 def build_email_body(digest_entries):
     body = ""
     for entry in digest_entries:
         chunk = f"""
-         📰 {entry['title']}
-         ⏱️ {entry['read_time']} min read | 📝 {entry['word_count']} words
-         {entry['summary']}
-         🔗 Read full article: {entry['link']}
-         ------------------------------
-                                        """
+     📰 {entry['title']}
+     ⏱️ {entry['read_time']} min read | 📝 {entry['word_count']} words
+     {entry['summary']}
+     🔗 Read full article: {entry['link']}
+     -------------------------------------------------
+                                                        """
         body += chunk
 
     return body
-
-
-
-
 
 
 if __name__ == "__main__":
@@ -46,7 +43,7 @@ if __name__ == "__main__":
     articles = fetch_articles(FEEDS)
     texts = get_all_full_text(articles)
     summaries = summarize_all_text(texts)
-    digest_entries = build_digest_entries(articles, summaries, texts)
+    digest_entries = build_digest_entries(articles, texts, summaries)
     print(len(digest_entries))
     email_body = build_email_body(digest_entries)
     send_email("Your Daily AI News Digest", email_body)
