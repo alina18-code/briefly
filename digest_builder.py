@@ -4,7 +4,6 @@ from summarizer import summarize_all_text
 from mailer import send_email
 
 
-
 def build_digest_entries(articles, texts , summaries):
     digest_entries = []
     for article, text, summary in zip(articles, texts, summaries):
