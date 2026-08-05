@@ -39,7 +39,6 @@ def build_email_body(digest_entries):
 
 
 if __name__ == "__main__":
-    print("Starting...")
     articles = fetch_articles(FEEDS)
     texts = get_all_full_text(articles)
     summaries = summarize_all_text(texts)
