@@ -27,12 +27,12 @@ def build_email_body(digest_entries):
     body = ""
     for entry in digest_entries:
         chunk = f"""
-     📰 {entry['title']}
-     ⏱️ {entry['read_time']} min read | 📝 {entry['word_count']} words
-     {entry['summary']}
-     🔗 Read full article: {entry['link']}
-     -------------------------------------------------
-                                                        """
+ 📰 {entry['title']}
+ ⏱️ {entry['read_time']} min read | 📝 {entry['word_count']} words
+ {entry['summary']}
+ 🔗 Read full article: {entry['link']}
+ -------------------------------------------------
+                                                  """
         body += chunk
 
     return body
@@ -44,7 +44,6 @@ if __name__ == "__main__":
     texts = get_all_full_text(articles)
     summaries = summarize_all_text(texts)
     digest_entries = build_digest_entries(articles, texts, summaries)
-    print(len(digest_entries))
     email_body = build_email_body(digest_entries)
     send_email("Your Daily AI News Digest", email_body)
 
