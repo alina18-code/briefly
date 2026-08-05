@@ -4,6 +4,7 @@ import smtplib
 from dotenv import load_dotenv
 import os
 
+
 load_dotenv()
 gmail_address = os.getenv("GMAIL_ADDRESS")
 gmail_app_password = os.getenv("GMAIL_APP_PASSWORD")

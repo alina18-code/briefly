@@ -42,7 +42,6 @@ def get_all_full_text (articles):
 
 if __name__ == "__main__":
     articles = fetch_articles(FEEDS)
-
     articles_text = get_all_full_text(articles)
    
 

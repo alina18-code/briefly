@@ -10,6 +10,7 @@ api_key = os.getenv("GEMINI_API_KEY")
 
 client = genai.Client(api_key=api_key)
 
+
 def summarize (text):
     prompt = f"""Summarize the following article in approximately 130 to 170 words covering all the major points from the article,
         covering all major points, events, and developments described — not just the opening details.
@@ -29,6 +30,7 @@ def summarize (text):
     )
  
     return response.text
+
 
 def summarize_all_text(texts):
     all_summaries = []
