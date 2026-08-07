@@ -2,6 +2,7 @@ from config import FEEDS
 from scraper import fetch_articles, get_all_full_text
 from summarizer import summarize_all_text
 from mailer import send_email
+from datetime import date
 
 
 def build_digest_entries(articles, texts , summaries):
@@ -15,7 +16,7 @@ def build_digest_entries(articles, texts , summaries):
            "title": article.title,
            "link": article.link,
             "summary": summary,
-            "word_count": word_count,
+            "word_counts": word_count,
             "read_time": round_read_time
         }
         digest_entries.append(entry)
@@ -23,19 +24,35 @@ def build_digest_entries(articles, texts , summaries):
 
 
 def build_email_body(digest_entries):
-    body = ""
+    today_str = date.today().strftime("%Y-%m-%d")
+
+    body = f"""
+    <h1 style="color: #2563eb; font-size: 28px; font-family: Arial, sans-serif;">
+        AI News Digest - {today_str}
+    </h1>
+    <hr style="border: none; border-top: 3px solid #2563eb; margin-bottom: 25px;">
+    """
+
     for entry in digest_entries:
-        chunk = f"""
- 📰 {entry['title']}
- ⏱️ {entry['read_time']} min read | 📝 {entry['word_count']} words
- {entry['summary']}
- 🔗 Read full article: {entry['link']}
- -------------------------------------------------
-                                                  """
-        body += chunk
+        card = f"""
+        <div style="border-left: 4px solid #2563eb; padding-left: 15px; margin-bottom: 30px;">
+            <h3 style="font-family: Arial, sans-serif; color: #1e293b; margin-bottom: 5px;">
+                {entry['title']}
+            </h3>
+            <p style="font-family: Arial, sans-serif; color: #475569; font-size: 13px; margin-top: 0;">
+                ⏱️ {entry['read_time']} min read &nbsp;|&nbsp; 📝 {entry['word_counts']} words
+            </p>
+            <p style="font-family: Arial, sans-serif; color: #334155; font-size: 15px; line-height: 1.5;">
+                {entry['summary']}
+            </p>
+            <p style="font-family: Arial, sans-serif; font-size: 14px;">
+                🔗 <a href="{entry['link']}" style="color: #2563eb; text-decoration: none;">Read full article</a>
+            </p>
+        </div>
+        """
+        body += card
 
     return body
-
 
 if __name__ == "__main__":
     articles = fetch_articles(FEEDS)
