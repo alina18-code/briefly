@@ -17,8 +17,14 @@ def fetch_articles(feeds):
 
 
 def get_full_text (url):
-   downloaded = trafilatura.fetch_url(url)
-   text = trafilatura.extract(downloaded) 
+   try:
+      downloaded = trafilatura.fetch_url(url)
+      text = trafilatura.extract(downloaded) 
+
+   except Exception as e:
+        print("Failed to fetch:", url, e)
+        return None
+
 
    if text is None or len(text) < 200:   
       return None 

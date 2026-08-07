@@ -11,19 +11,23 @@ gmail_app_password = os.getenv("GMAIL_APP_PASSWORD")
 
 
 def send_email (subject, body):
-   msg = MIMEMultipart()
-   msg["subject"] = subject
-   msg["From"] = gmail_address
-   msg["To"] = gmail_address
+  try:
+      msg = MIMEMultipart()
+      msg["subject"] = subject
+      msg["From"] = gmail_address
+      msg["To"] = gmail_address
 
-   text_part = MIMEText(body, "plain")
-   msg.attach(text_part)
+      text_part = MIMEText(body, "plain")
+      msg.attach(text_part)
 
-   server = smtplib.SMTP("smtp.gmail.com", 587)
-   server.starttls()
-   server.login(gmail_address, gmail_app_password)
-   server.send_message(msg)
-   server.quit()
+      server = smtplib.SMTP("smtp.gmail.com", 587)
+      server.starttls()
+      server.login(gmail_address, gmail_app_password)
+      server.send_message(msg)
+      server.quit()
+
+  except Exception as e:
+        print("Failed to send email:", e)
 
 
 if __name__ == "__main__":
