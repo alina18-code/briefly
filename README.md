@@ -29,28 +29,29 @@ Briefly runs as a simple pipeline:
 | `python-dotenv` | Manages secrets via environment variables |
 | GitHub Actions | Runs the pipeline automatically, on a schedule, in the cloud |
 
-## Project Status
-
-**Phase 1 — Complete**
-Single-user, tech-only digest, fully automated via GitHub Actions. No database, no UI — a clean, working script.
-
-**Planned**
-- **Phase 2:** SQLite storage, multiple topics (finance, sports, etc.), and a Flask viewer UI
-- **Phase 3:** Multi-user support with per-user topic and delivery preferences, full deployment
-
 ## Setup
 
-1. Clone the repo and install dependencies:
-   ```
+1. Clone the repository and install dependencies:
+   ```bash
    pip install -r requirements.txt
    ```
-2. Create a `.env` file with the following:
-   ```
+2. Create a `.env` file with your credentials:
+   ```env
    GEMINI_API_KEY=your_key_here
    GMAIL_ADDRESS=your_email_here
    GMAIL_APP_PASSWORD=your_app_password_here
    ```
-3. Run the digest:
+3. Run the digest locally:
+   ```bash
+   python src/digest_builder.py
    ```
-   python digest_builder.py
-   ```
+
+## GitHub Actions Recommendation
+
+A scheduled GitHub Actions workflow is a strong fit for this project because it lets the digest run automatically without keeping a local machine on all the time.
+
+Recommended setup:
+- run the workflow once per day or on a custom schedule
+- store secrets in GitHub repository secrets
+- keep the workflow simple and fail loudly if the API or SMTP configuration is missing
+- add a test step before the digest runs for better reliability
