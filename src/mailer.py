@@ -31,6 +31,6 @@ def send_email (subject, body):
 
 
 if __name__ == "__main__":
-   send_email("test Email", "This is a test from my python script")
+    send_email()
    
 
