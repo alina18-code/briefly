@@ -4,6 +4,14 @@
 
 No more scrolling through a dozen tabs to keep up with tech news. Briefly does the reading for you.
 
+## Email Preview
+
+Here’s a preview of the digest email that Briefly sends:
+
+![Email digest preview 1](assets/screenshot.2.jpg)
+
+![Email digest preview 2](assets/screenshot.1.jpg)
+
 ## What It Does
 
 Briefly pulls the latest articles from trusted tech news sources, extracts the full article text, and uses Google's Gemini API to generate a concise, fact-preserving summary of each one. Every summary includes an estimated read time and a direct link to the original article, so you can decide what's worth a deeper read — all delivered as a single, well-formatted email.
@@ -17,6 +25,8 @@ Briefly runs as a simple pipeline:
 3. **Summarize** — Sends each article to Gemini with a tuned prompt, generating a clear, neutral summary that preserves key facts, figures, and dates
 4. **Compile** — Combines everything into a structured, emoji-friendly digest with read time and word count per article
 5. **Deliver** — Sends the finished digest via email
+
+
 
 ## Tech Stack
 
