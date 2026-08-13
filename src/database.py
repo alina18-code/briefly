@@ -14,5 +14,16 @@ def init_db():
     connection.close()
 
 
+def is_duplicate(link):
+    connection = sqlite3.connect("Briefly.db")
+    try:
+        cursor = connection.cursor()
+        cursor.execute("SELECT link FROM sent_articles WHERE link = ?", (link,))
+        result = cursor.fetchone()
+        return result is not None
+    finally:
+        connection.close()
+
+
 if __name__ == "__main__":
     init_db()
