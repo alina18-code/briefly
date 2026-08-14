@@ -3,7 +3,7 @@ from scraper import fetch_articles, get_all_full_text
 from summarizer import summarize_all_text
 from mailer import send_email
 from datetime import date
-from database import is_duplicate, save_sent_articles
+from database import init_db, is_duplicate, save_sent_articles
 
 
 articles = fetch_articles(FEEDS)
@@ -69,4 +69,8 @@ if __name__ == "__main__":
     digest_entries = build_digest_entries(new_articles, texts, summaries)
     email_body = build_email_body(digest_entries)
     send_email("Your Daily AI News Digest", email_body)
+    today_str = date.today().strftime("%Y-%m-%d")
+    for articles in new_articles:
+       save_sent_articles(article.link, article.title, today_str)
+  
 
