@@ -3,9 +3,17 @@ from scraper import fetch_articles, get_all_full_text
 from summarizer import summarize_all_text
 from mailer import send_email
 from datetime import date
+from database import is_duplicate, save_sent_articles
 
 
-def build_digest_entries(articles, texts , summaries):
+articles = fetch_articles(FEEDS)
+new_articles = []
+for article in articles:
+    if not is_duplicate(article.link):
+        new_articles.append(article)
+
+
+def build_digest_entries(new_articles, texts , summaries):
     digest_entries = []
     for article, text, summary in zip(articles, texts, summaries):
         word_counts = text.split()
@@ -56,9 +64,9 @@ def build_email_body(digest_entries):
 
 if __name__ == "__main__":
     articles = fetch_articles(FEEDS)
-    texts = get_all_full_text(articles)
+    texts = get_all_full_text(new_articles)
     summaries = summarize_all_text(texts)
-    digest_entries = build_digest_entries(articles, texts, summaries)
+    digest_entries = build_digest_entries(new_articles, texts, summaries)
     email_body = build_email_body(digest_entries)
     send_email("Your Daily AI News Digest", email_body)
 
