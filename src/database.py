@@ -14,6 +14,7 @@ def init_db():
     connection.close()
 
 
+
 def is_duplicate(link):
     connection = sqlite3.connect("Briefly.db")
     try:
@@ -25,14 +26,20 @@ def is_duplicate(link):
         connection.close()
 
 
+
 def save_sent_articles(link, title, date_sent):
-    connection = sqlite3.connect("Briefly.db")
-    cursor = connection.cursor()
-    cursor.execute("INSERT INTO sent_articles (link, title, date_sent) VALUES (?,?,?)",
+    try:
+        connection = sqlite3.connect("Briefly.db")
+        cursor = connection.cursor()
+        cursor.execute("INSERT INTO sent_articles (link, title, date_sent) VALUES (?,?,?)",
                    (link,title, date_sent)
-    )
-    connection.commit()
-    connection.close()
+        )
+        connection.commit()
+        connection.close()
+
+    except sqlite3.IntegrityError:
+       print("Already saved, skipping:", link)
+
     
 
 if __name__ == "__main__":
