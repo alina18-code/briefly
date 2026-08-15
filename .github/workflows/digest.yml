@@ -1,5 +1,9 @@
 name: Daily AI News Digest
 
+permissions:
+  contents: write
+
+
 on:
   schedule:
     - cron: "0 14 * * *"
@@ -27,3 +31,13 @@ jobs:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: python src/digest_builder.py
+
+      - name: Commit updated database
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add Briefly.db
+          git commit -m "Update sent articles database" || echo "No changes to commit"
+          git push
+
+
