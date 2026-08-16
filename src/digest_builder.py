@@ -2,20 +2,34 @@ from config import FEEDS
 from scraper import fetch_articles, get_all_full_text
 from summarizer import summarize_all_text
 from mailer import send_email
-from datetime import date
+from datetime import date, datetime, time
 from database import init_db, is_duplicate, save_sent_articles
 
 
-articles = fetch_articles(FEEDS)
-new_articles = []
-for article in articles:
-    if not is_duplicate(article.link):
-        new_articles.append(article)
+def filter_todays_articles(articles):
+    today_articles = []
+    todays_date = date.today()
+
+    for article in articles:
+        struct_date = article.get('published_parsed')
+        if not struct_date:
+            continue
+
+        article_datetime = datetime.fromtimestamp(time.mktime(struct_date))
+        article_date = article_datetime.date()
+
+        if article_date == todays_date:
+            today_articles.append(article)
+
+        else:
+            continue
+            
+    return today_articles    
 
 
 def build_digest_entries(new_articles, texts , summaries):
     digest_entries = []
-    for article, text, summary in zip(articles, texts, summaries):
+    for article, text, summary in zip(new_articles, texts, summaries):
         word_counts = text.split()
         word_count = len(word_counts)
         read_time = word_count / 200 
@@ -62,15 +76,26 @@ def build_email_body(digest_entries):
 
     return body
 
+
 if __name__ == "__main__":
+    init_db()
+
     articles = fetch_articles(FEEDS)
+    todays_articles = filter_todays_articles(articles)
+
+    new_articles = []
+    for article in todays_articles:
+        if not is_duplicate(article.link):
+            new_articles.append(article)
+
     texts = get_all_full_text(new_articles)
     summaries = summarize_all_text(texts)
     digest_entries = build_digest_entries(new_articles, texts, summaries)
     email_body = build_email_body(digest_entries)
     send_email("Your Daily AI News Digest", email_body)
+
     today_str = date.today().strftime("%Y-%m-%d")
-    for articles in new_articles:
-       save_sent_articles(article.link, article.title, today_str)
+    for article in new_articles:
+        save_sent_articles(article.link, article.title, today_str)
   
 

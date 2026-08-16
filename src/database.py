@@ -16,7 +16,7 @@ def init_db():
 
 
 def is_duplicate(link):
-    connection = sqlite3.connect("Briefly.db")
+    connection = sqlite3.connect("Briefly.db", timeout=10)
     try:
         cursor = connection.cursor()
         cursor.execute("SELECT link FROM sent_articles WHERE link = ?", (link,))
@@ -29,7 +29,7 @@ def is_duplicate(link):
 
 def save_sent_articles(link, title, date_sent):
     try:
-        connection = sqlite3.connect("Briefly.db")
+        connection = sqlite3.connect("Briefly.db", timeout=10)
         cursor = connection.cursor()
         cursor.execute("INSERT INTO sent_articles (link, title, date_sent) VALUES (?,?,?)",
                    (link,title, date_sent)
