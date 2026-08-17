@@ -2,7 +2,8 @@ from config import FEEDS
 from scraper import fetch_articles, get_all_full_text
 from summarizer import summarize_all_text
 from mailer import send_email
-from datetime import date, datetime, time
+from datetime import date, datetime
+import time 
 from database import init_db, is_duplicate, save_sent_articles
 
 
