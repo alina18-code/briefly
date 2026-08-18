@@ -99,6 +99,8 @@ if __name__ == "__main__":
 
     today_str = date.today().strftime("%Y-%m-%d")
     for article in new_articles:
-        save_sent_articles(article.link, article.title, today_str)
+        struct_date = article.get('published_parsed')
+        published_dt = datetime.fromtimestamp(time.mktime(struct_date))
+        save_sent_articles(article.link, article.title, today_str, published_dt.isoformat())
   
 
