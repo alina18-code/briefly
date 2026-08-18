@@ -2,13 +2,14 @@ import sqlite3
 
 
 def init_db():
-    connection = sqlite3.connect("Briefly.db")
+    connection = sqlite3.connect("Briefly.db", timeout=10)
     cursor = connection.cursor()
     cursor.execute("""CREATE TABLE IF NOT EXISTS sent_articles (
         id INTEGER PRIMARY KEY,
         link TEXT UNIQUE,
         title TEXT,
         date_sent TEXT
+        published_at TEXT
     )""")
     connection.commit()
     connection.close()
@@ -27,7 +28,7 @@ def is_duplicate(link):
 
 
 
-def save_sent_articles(link, title, date_sent):
+def save_sent_articles(link, title, date_sent, published_at):
     try:
         connection = sqlite3.connect("Briefly.db", timeout=10)
         cursor = connection.cursor()
@@ -40,7 +41,18 @@ def save_sent_articles(link, title, date_sent):
     except sqlite3.IntegrityError:
        print("Already saved, skipping:", link)
 
-    
+
+
+def get_last_sent_time ():
+    connection = sqlite3.connect("Briefly.db", timeout=10)
+    cursor = connection.cursor()
+    cursor.execute("SELECT MAX (published_at) FROM sent_articles")
+    result = cursor.fetchone()
+    connection.close()
+    return result[0] if result and result[0] else None
+
+
+
 
 if __name__ == "__main__":
     init_db()

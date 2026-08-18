@@ -4,12 +4,16 @@ from summarizer import summarize_all_text
 from mailer import send_email
 from datetime import date, datetime
 import time 
-from database import init_db, is_duplicate, save_sent_articles
+from database import init_db, is_duplicate, save_sent_articles, get_last_sent_time
 
+def filter_new_articles(articles):
+    new_articles = []
 
-def filter_todays_articles(articles):
-    today_articles = []
-    todays_date = date.today()
+    last_sent = get_last_sent_time()
+    if last_sent:
+        cutoff = datetime.fromisoformat(last_sent)
+    else:
+        cutoff = datetime.combine(date.today(), datetime.min.time())
 
     for article in articles:
         struct_date = article.get('published_parsed')
@@ -17,15 +21,12 @@ def filter_todays_articles(articles):
             continue
 
         article_datetime = datetime.fromtimestamp(time.mktime(struct_date))
-        article_date = article_datetime.date()
 
-        if article_date == todays_date:
-            today_articles.append(article)
+        if article_datetime > cutoff:
+            new_articles.append(article)
 
-        else:
-            continue
-            
-    return today_articles    
+    return new_articles
+  
 
 
 def build_digest_entries(new_articles, texts , summaries):
@@ -78,11 +79,12 @@ def build_email_body(digest_entries):
     return body
 
 
+
 if __name__ == "__main__":
     init_db()
 
     articles = fetch_articles(FEEDS)
-    todays_articles = filter_todays_articles(articles)
+    todays_articles = filter_new_articles(articles)
 
     new_articles = []
     for article in todays_articles:
