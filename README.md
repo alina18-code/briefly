@@ -1,6 +1,6 @@
 # Briefly
 
-**Briefly** is an automated AI news digest that scrapes the latest tech news, summarizes each article with AI, and delivers a clean, readable digest straight to your inbox — every day.
+**Briefly** is an automated AI news digest that scrapes the latest tech news, summarizes each article with AI, and delivers a clean, readable digest straight to your inbox every day.
 
 No more scrolling through a dozen tabs to keep up with tech news. Briefly does the reading for you.
 
@@ -14,7 +14,7 @@ Here’s a preview of the digest email that Briefly sends:
 
 ## What It Does
 
-Briefly pulls the latest articles from trusted tech news sources, extracts the full article text, and uses Google's Gemini API to generate a concise, fact-preserving summary of each one. Every summary includes an estimated read time and a direct link to the original article, so you can decide what's worth a deeper read — all delivered as a single, well-formatted email.
+Briefly pulls the latest articles from trusted tech news sources, extracts the full article text, and uses Google's Gemini API to generate a concise, fact-preserving summary of each one. Every summary includes an estimated read time and a direct link to the original article, so you can decide what's worth a deeper read all delivered as a single, well-formatted email.
 
 ## How It Works
 
