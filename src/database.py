@@ -53,6 +53,5 @@ def get_last_sent_time ():
 
 
 
-
 if __name__ == "__main__":
     init_db()
