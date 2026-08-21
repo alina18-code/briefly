@@ -15,6 +15,8 @@ def filter_new_articles(articles):
     else:
         cutoff = datetime.combine(date.today(), datetime.min.time())
 
+    print("Cutoff being used:", cutoff)
+
     for article in articles:
         struct_date = article.get('published_parsed')
         if not struct_date:
@@ -84,12 +86,17 @@ if __name__ == "__main__":
     init_db()
 
     articles = fetch_articles(FEEDS)
+    print("Fetched:", len(articles))
+
     todays_articles = filter_new_articles(articles)
+    print("After date filter:", len(todays_articles))
+
 
     new_articles = []
     for article in todays_articles:
         if not is_duplicate(article.link):
             new_articles.append(article)
+    print("After duplicate filter:", len(new_articles))
 
     texts = get_all_full_text(new_articles)
     summaries = summarize_all_text(texts)
