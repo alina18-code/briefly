@@ -43,14 +43,6 @@ def save_sent_articles(link, title, date_sent, published_at):
 
 
 
-def get_last_sent_time ():
-    connection = sqlite3.connect("Briefly.db", timeout=10)
-    cursor = connection.cursor()
-    cursor.execute("SELECT MAX (published_at) FROM sent_articles")
-    result = cursor.fetchone()
-    connection.close()
-    return result[0] if result and result[0] else None
-
 
 
 if __name__ == "__main__":

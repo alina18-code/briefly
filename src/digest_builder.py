@@ -2,18 +2,15 @@ from config import FEEDS
 from scraper import fetch_articles, get_all_full_text
 from summarizer import summarize_all_text
 from mailer import send_email
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import time 
-from database import init_db, is_duplicate, save_sent_articles, get_last_sent_time
+from database import init_db, is_duplicate, save_sent_articles
 
 def filter_new_articles(articles):
     new_articles = []
 
-    last_sent = get_last_sent_time()
-    if last_sent:
-        cutoff = datetime.fromisoformat(last_sent)
-    else:
-        cutoff = datetime.combine(date.today(), datetime.min.time())
+
+    cutoff = datetime.now() - timedelta(day=3)
 
     print("Cutoff being used:", cutoff)
 
