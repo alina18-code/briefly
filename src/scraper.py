@@ -27,7 +27,7 @@ def get_full_text (url):
 
 
    if text is None or len(text) < 200:   
-      return None 
+     return None
    
    return text
  
@@ -39,7 +39,12 @@ def get_all_full_text (articles):
    for article in articles:
       text = get_full_text (article.link)
       if text is None or len(text) < 200: 
+         print("SKIPPED:", article.link)
          continue
+
+      print("KEPT:", article.link)
+
+
       
       all_text.append(text)
    return all_text
