@@ -10,7 +10,7 @@ def filter_new_articles(articles):
     new_articles = []
 
 
-    cutoff = datetime.now() - timedelta(day=3)
+    cutoff = datetime.now() - timedelta(days=3)
 
     print("Cutoff being used:", cutoff)
 
